@@ -3,7 +3,7 @@ FROM nginx:stable
 LABEL maintainer="maltokyo"
 
 RUN apt-get update && apt-get dist-upgrade -y \
-	&& apt-get install -y apache2-utils libnginx-mod-http-dav-ext \
+	&& apt-get install -y apache2-utils nginx-mod-dav-ext \
 	&& rm -rf /var/lib/apt/lists/*
 
 
