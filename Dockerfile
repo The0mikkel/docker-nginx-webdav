@@ -1,4 +1,4 @@
-FROM nginx:1.22
+FROM nginx:stable
 
 LABEL maintainer="maltokyo"
 
