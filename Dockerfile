@@ -2,7 +2,9 @@ FROM nginx:stable
 
 LABEL maintainer="maltokyo"
 
-RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y nginx-extras apache2-utils
+RUN apt-get update && apt-get dist-upgrade -y \
+	&& apt-get install -y apache2-utils libnginx-mod-http-dav-ext \
+	&& rm -rf /var/lib/apt/lists/*
 
 
 COPY webdav.conf /etc/nginx/conf.d/default.conf
