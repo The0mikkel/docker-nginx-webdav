@@ -10,3 +10,23 @@ services:
     environment:
       USERNAME: your_webdav_user
       PASSWORD: your_webdav_passwd
+
+---
+services:
+  nginx_webdav:
+    image: ghcr.io/the0mikkel/docker-nginx-webdav:latest
+    volumes:
+      - "./data:/media/data"
+    environment:
+      USERNAME: demo-user
+      PASSWORD: seom-ldonge-egepwtngd-wept3ignwerpig
+
+      # PROXY
+      VIRTUAL_HOST: webdav.hel1.hetzner.themikkel.dk
+      LETSENCRYPT_HOST: webdav.hel1.hetzner.themikkel.dk
+    networks:
+      - nginx-proxy
+
+networks:
+  nginx-proxy:
+    external: true
