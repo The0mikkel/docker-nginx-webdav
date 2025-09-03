@@ -1,0 +1,35 @@
+name: Docker build and push
+
+on:
+  workflow_call:
+  push:
+    branches:
+      - master
+
+jobs:
+  get-version:
+    name: Get version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Get version from file
+        id: get-version
+        run: echo "version=$(cat version)" >> $GITHUB_OUTPUT
+      - name: Print version
+        run: echo ${{ steps.get-version.outputs.version }}
+  docker:
+    name: Docker build and push
+    needs:
+      - get-version
+    uses: the0mikkel/ci/.github/workflows/docker.yml@v1.3.1
+    with:
+      semver: ${{ needs.get-version.outputs.version }}
+      arguments: |
+        VERSION=${{ needs.get-version.outputs.version }}
+      context: .
+      dockerfile: Dockerfile
+      image_name: ${{ github.repository }}
+      fetch_submodules: false
