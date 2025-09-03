@@ -1,12 +1,12 @@
-FROM nginx:latest
+FROM nginx:1.22
 
 LABEL maintainer="maltokyo"
 
-RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y apache2-utils
+RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y nginx-extras apache2-utils
 
 
 COPY webdav.conf /etc/nginx/conf.d/default.conf
-# RUN rm /etc/nginx/sites-enabled/*
+RUN rm /etc/nginx/sites-enabled/*
 
 
 RUN mkdir -p "/media/data"
